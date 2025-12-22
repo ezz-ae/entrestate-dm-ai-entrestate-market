@@ -1,0 +1,16 @@
+{
+  "878_310_riverside_crescent": {
+    "developer": "Sobha Realty",
+    "location": "Sobha Hartland",
+    "priceFromAED": 2100000,
+    "paymentPlan": "80/20 post-handover",
+    "handover": "Q4 2026"
+  },
+  "5309_the_serene": {
+    "developer": "Aldar",
+    "location": "Dubai Islands",
+    "priceFromAED": 1850000,
+    "paymentPlan": "60/40",
+    "handover": "Q2 2027"
+  }
+}
