@@ -60,8 +60,9 @@ export async function GET(req: NextRequest) {
 
   doc.end();
   const pdfBuffer = await pdfBufferPromise;
+  const pdfBlob = new Blob([pdfBuffer], { type: 'application/pdf' });
 
-  return new NextResponse(pdfBuffer, {
+  return new NextResponse(pdfBlob, {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
