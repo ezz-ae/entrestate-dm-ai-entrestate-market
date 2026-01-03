@@ -162,12 +162,12 @@ export default function EventsPage() {
       type: form.type.trim(),
       location: form.location.trim(),
       start_datetime: parsedDate,
-      related_project: form.related_project.trim() || null,
+      related_project: form.related_project.trim() || undefined,
       short_description: form.short_description.trim(),
       cta_text: form.cta_text.trim(),
       active: form.active,
       updatedAt: Date.now()
-    } satisfies Omit<EventRecord, "id">;
+    };
 
     setSaving(true);
     try {
@@ -210,22 +210,6 @@ export default function EventsPage() {
     } catch (err) {
       console.error("Failed to delete event", err);
       showFeedback({ type: "error", message: "Failed to delete event." });
-    }
-  };
-
-  const handleToggleActive = async (eventRecord: EventRecord) => {
-    try {
-      await updateDoc(doc(db, "events", eventRecord.id), {
-        active: !eventRecord.active,
-        updatedAt: Date.now()
-      });
-      showFeedback({
-        type: "success",
-        message: eventRecord.active ? "Event paused." : "Event activated."
-      });
-    } catch (err) {
-      console.error("Failed to toggle event", err);
-      showFeedback({ type: "error", message: "Unable to update event." });
     }
   };
 

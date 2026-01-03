@@ -1,5 +1,39 @@
+
 {
-  "entities": [],
-  "places": [],
-  "documents": []
+  "projects": [
+    {
+      "id": "proj_001",
+      "name": "Emaar Beachfront",
+      "slug": "emaar-beachfront",
+      "city": "Dubai",
+      "developer": "Emaar Properties",
+      "area": "Dubai Marina",
+      "subArea": "Beachfront",
+      "propertyTypes": ["Apartment", "Penthouse"],
+      "status": "Under Construction",
+      "priceFromAED": 1800000,
+      "priceNote": "Starting price for a 1-bedroom apartment",
+      "handover": "Q4 2025",
+      "paymentPlan": "60/40",
+      "yieldEstimate": "6-8%",
+      "bestFor": ["Investors", "End-users"],
+      "keyPoints": [
+        "Private beach access",
+        "Views of Dubai Marina and the Arabian Gulf",
+        "World-class amenities"
+      ],
+      "description": "A premium residential community offering a mix of 1-4 bedroom apartments with stunning views and resort-style living.",
+      "imageUrl": "https://example.com/emaar-beachfront.jpg",
+      "externalRef": "EMAAR-BF-01",
+      "tags": ["waterfront", "luxury", "emaar"],
+      "updatedAt": "2024-05-20T10:00:00Z"
+    }
+  ],
+  "developers": [
+    {
+        "id": "dev_001",
+        "name": "Emaar Properties",
+        "slug": "emaar-properties"
+    }
+  ]
 }

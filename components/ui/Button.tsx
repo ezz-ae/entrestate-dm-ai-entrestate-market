@@ -1,24 +1,33 @@
 
-import React from "react";
 import Link from "next/link";
+import React from 'react';
 
-const Button = ({ href, children, className, ...props }: { href?: string; children: React.ReactNode; className?: string, [x:string]: any }) => {
-  const classes = `rounded-full px-6 py-3 text-center text-sm font-semibold text-white shadow-lg ${className}`;
+interface ButtonProps {
+  children: React.ReactNode;
+  href?: string;
+  className?: string;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+}
+
+const Button: React.FC<ButtonProps> = ({ children, href, className, onClick, type = "button", disabled }) => {
+  const baseClasses = "px-8 py-3 font-semibold rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-300 disabled:opacity-50 inline-flex items-center justify-center";
+  
+  const primaryClasses = "bg-apple-blue text-white hover:bg-apple-blue/90 focus:ring-apple-blue";
+
+  const fullClassName = `${baseClasses} ${primaryClasses} ${className}`;
 
   if (href) {
     return (
-      <Link
-        href={href}
-        className={classes}
-        {...props}
-      >
+      <Link href={href} className={fullClassName}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button className={classes} {...props}>
+    <button type={type} onClick={onClick} className={fullClassName} disabled={disabled}>
       {children}
     </button>
   );

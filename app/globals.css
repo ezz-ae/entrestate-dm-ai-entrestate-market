@@ -24,18 +24,6 @@ body {
   letter-spacing: -0.011em;
 }
 
-.apple-button-primary {
-  @apply inline-flex items-center justify-center px-7 py-3 rounded-full bg-apple-blue text-white font-medium transition-all duration-300 hover:opacity-90 active:scale-[0.98] shadow-sm;
-}
-
-.apple-button-secondary {
-  @apply inline-flex items-center justify-center px-7 py-3 rounded-full bg-apple-gray-50 text-apple-blue font-medium transition-all duration-300 hover:bg-apple-gray-100 active:scale-[0.98];
-}
-
-.apple-card {
-  @apply rounded-[22px] bg-white border border-apple-gray-100 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_4px_24px_rgba(0,0,0,0.06)];
-}
-
 .section-padding {
   @apply py-20 md:py-32 px-6;
 }

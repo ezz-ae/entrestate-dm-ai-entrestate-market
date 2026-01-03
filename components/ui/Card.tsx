@@ -1,9 +1,14 @@
 
-import React from "react";
+import React from 'react';
 
-const Card = ({ children, className }: { children: React.ReactNode; className?: string }) => {
+interface CardProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const Card: React.FC<CardProps> = ({ children, className }) => {
   return (
-    <div className={`rounded-3xl border border-slate-800 bg-slate-950/80 p-8 ${className}`}>
+    <div className={`bg-white p-8 rounded-2xl shadow-lg border border-apple-gray-100 ${className}`}>
       {children}
     </div>
   );

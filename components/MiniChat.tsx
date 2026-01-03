@@ -11,16 +11,19 @@ export default function MiniChat({ script }: { script: Message[] }) {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
+    // Randomized timing for a more natural feel
+    const baseTime = 2500;
     const timer = setInterval(() => {
       setStep((prev) => (prev + 1) % (script.length + 1));
-    }, 2500);
+    }, baseTime + Math.random() * 1000); 
+    
     return () => clearInterval(timer);
   }, [script.length]);
 
   const visibleMessages = script.slice(0, step);
 
   return (
-    <div className="w-full bg-white rounded-2xl border border-apple-gray-100 shadow-sm overflow-hidden flex flex-col h-[280px]">
+    <div className="w-full bg-white rounded-2xl border border-apple-gray-100 shadow-sm overflow-hidden flex flex-col h-[320px]">
       <div className="p-3 border-b border-apple-gray-50 bg-apple-gray-50/50 flex items-center gap-2">
          <div className="w-5 h-5 rounded-full bg-apple-gray-200" />
          <div className="h-2 w-16 bg-apple-gray-200 rounded-full" />

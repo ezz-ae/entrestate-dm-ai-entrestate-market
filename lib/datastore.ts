@@ -1,63 +1,109 @@
-import type { EntrestateDatastore, DatastoreDocument, DatastoreEntity, DatastorePlace } from "@/types/entrestateDatastore";
-// @ts-ignore
-import datastoreRaw from "@/data/entrestate_ai_datastore_v2.json";
 
-const datastore: EntrestateDatastore = datastoreRaw as EntrestateDatastore;
+import path from 'path';
+import fs from 'fs/promises';
 
-export function getDatastore() {
-  return datastore;
+export interface Project {
+  id: string;
+  name: string;
+  slug: string;
+  city: string;
+  developer: string;
+  area: string;
+  subArea?: string;
+  propertyTypes: string[];
+  status: string;
+  priceFromAED?: number;
+  priceNote?: string;
+  handover: string;
+  paymentPlan: string;
+  yieldEstimate?: string;
+  bestFor: string[];
+  keyPoints: string[];
+  description: string;
+  imageUrl: string;
+  externalRef?: string;
+  tags: string[];
+  updatedAt: string;
 }
 
-export function getProjectEntities() {
-  return datastore.entities.filter((entity) => entity.type === "project");
+export interface Developer {
+  id: string;
+  name: string;
+  slug: string;
 }
 
-export function getDeveloperEntities() {
-  return datastore.entities.filter((entity) => entity.type === "developer");
+export interface Bot {
+  id: string;
+  name: string;
+  instagramPageId: string;
+  tenantId: string;
 }
 
-export function getPlaces(type?: string) {
-  if (!type) return datastore.places;
-  return datastore.places.filter((place) => place.type === type);
+interface Datastore {
+  projects: Project[];
+  developers: Developer[];
+  bots: Bot[];
 }
 
-export function getProjectDocuments() {
-  return datastore.documents;
+// --- Main Datastore Functions ---
+
+// Function to read the datastore from the JSON file
+async function readDatastore(): Promise<Datastore> {
+  const filePath = path.join(process.cwd(), 'data', 'entrestate_ai_datastore_v2.json');
+  const fileContent = await fs.readFile(filePath, 'utf-8');
+  return JSON.parse(fileContent) as Datastore;
 }
 
-export function findProjectsBy(filter: {
-  developerId?: string;
-  areaPlaceId?: string;
-  maxPrice?: number;
-  status?: string;
-  limit?: number;
-}) {
-  const projects = getProjectEntities();
-  const filtered = projects.filter((project) => {
-    const attributes = (project.attributes || {}) as Record<string, unknown>;
-    const getAttr = (key: string) => attributes[key];
+/**
+ * Fetches a single project by its slug.
+ * @param slug The slug of the project to fetch.
+ * @returns The project object or null if not found.
+ */
+export async function getProject(slug: string): Promise<Project | null> {
+  const db = await readDatastore();
+  const project = db.projects.find(p => p.slug === slug);
+  return project || null;
+}
 
-    if (filter.developerId && getAttr("developer_id") !== filter.developerId) {
-      return false;
-    }
-    if (filter.areaPlaceId && getAttr("area_place_id") !== filter.areaPlaceId) {
-      return false;
-    }
-    if (filter.status && getAttr("current_status") !== filter.status && getAttr("status") !== filter.status) {
-      return false;
-    }
-    if (filter.maxPrice) {
-      const priceRaw = getAttr("price_from") ?? getAttr("priceFromAED");
-      const price = typeof priceRaw === "number" ? priceRaw : Number(priceRaw);
-      if (price && price > filter.maxPrice) {
-        return false;
-      }
-    }
-    return true;
-  });
+/**
+ * Fetches a list of projects with optional filters.
+ * @param filters Optional filters to apply.
+ * @returns A list of projects.
+ */
+export async function getProjects(filters: any = {}): Promise<Project[]> {
+  const db = await readDatastore();
+  // For now, we return all projects as no specific filters are implemented.
+  // This can be extended to filter by developer, area, etc.
+  return db.projects;
+}
 
-  if (filter.limit) {
-    return filtered.slice(0, filter.limit);
-  }
-  return filtered;
+/**
+ * Fetches a single developer by its slug.
+ * @param slug The slug of the developer to fetch.
+ * @returns The developer object or null if not found.
+ */
+export async function getDeveloper(slug: string): Promise<Developer | null> {
+  const db = await readDatastore();
+  const developer = db.developers.find(d => d.slug === slug);
+  return developer || null;
+}
+
+/**
+ * Fetches all developers.
+ * @returns A list of all developers.
+ */
+export async function getDevelopers(): Promise<Developer[]> {
+  const db = await readDatastore();
+  return db.developers;
+}
+
+/**
+ * Fetches a bot by its Instagram Page ID.
+ * @param pageId The Instagram Page ID to look up.
+ * @returns The bot object or null if not found.
+ */
+export async function getBotByInstagramPageId(pageId: string): Promise<Bot | null> {
+  const db = await readDatastore();
+  const bot = db.bots.find(b => b.instagramPageId === pageId);
+  return bot || null;
 }

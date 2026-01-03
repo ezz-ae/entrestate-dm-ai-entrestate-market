@@ -1,0 +1,87 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    //------------------------------------------------------------------
+    // Helper Functions
+    //------------------------------------------------------------------
+
+    // Check if the requesting user has a specific userId.
+    function isUser(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    //------------------------------------------------------------------
+    // Collection: users
+    // Purpose: Stores user-specific profile information.
+    //------------------------------------------------------------------
+    match /users/{userId} {
+      // A user can create, read, and update their own document.
+      allow read, update: if isUser(userId);
+      allow create: if isUser(userId);
+    }
+
+    //------------------------------------------------------------------
+    // Collection: sites
+    // Purpose: Stores configuration and content for each user's site.
+    //------------------------------------------------------------------
+    match /sites/{siteId} {
+      // READ:
+      // - Anyone can read a site if its status is 'published'.
+      // - The owner (tenant) can always read their own site.
+      allow read: if resource.data.status == 'published' || isUser(resource.data.tenantId);
+      
+      // CREATE:
+      // - A user can create a site if they set themselves as the tenantId.
+      allow create: if isUser(request.resource.data.tenantId);
+      
+      // UPDATE, DELETE:
+      // - The owner can update or delete their own site.
+      allow update, delete: if isUser(resource.data.tenantId);
+
+      // --- Sub-collection: leads ---
+      match /leads/{leadId} {
+        // CREATE:
+        // - Anyone can create a lead, but only on a published site.
+        // This is for public lead-capture forms.
+        allow create: if get(/databases/$(database)/documents/sites/$(siteId)).data.status == 'published';
+        
+        // READ, UPDATE, DELETE:
+        // - The site owner can manage the leads for their site.
+        allow read, update, delete: if isUser(get(/databases/$(database)/documents/sites/$(siteId)).data.tenantId);
+      }
+    }
+
+    //------------------------------------------------------------------
+    // Collection: jobs
+    // Purpose: Tracks status of background jobs (e.g., site refiner).
+    // ASSUMPTION: Job documents contain a `tenantId` field that matches the owner of the site.
+    //------------------------------------------------------------------
+    match /jobs/{jobId} {
+      // READ:
+      // - The owner can read jobs they initiated to poll for status.
+      allow read: if isUser(resource.data.tenantId);
+      
+      // CREATE:
+      // - A user can create a job for one of their sites.
+      // - The rule enforces that the `tenantId` on the new job matches the creator's UID.
+      allow create: if isUser(request.resource.data.tenantId);
+      
+      // UPDATE, DELETE:
+      // - Not allowed by clients. Only backend workers (using admin SDK) should modify jobs.
+    }
+    
+    //------------------------------------------------------------------
+    // Collection: bots
+    // Purpose: Maps Instagram Page IDs to internal bot IDs.
+    //------------------------------------------------------------------
+    match /bots/{botId} {
+      // READ:
+      // - Publicly readable. Needed by the unauthenticated Meta webhook to find the correct bot.
+      // - SECURITY NOTE: This is permissive. For higher security, the webhook should call a
+      //   secure Cloud Function that validates a secret before querying the database.
+      allow read: if true;
+    }
+  }
+}
