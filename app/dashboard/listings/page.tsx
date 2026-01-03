@@ -242,248 +242,189 @@ export default function ListingsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <section className="rounded-3xl border border-white/10 bg-slate-900/70 p-6 text-sm text-slate-200">
-        <p className="text-xs uppercase tracking-[0.35em] text-emerald-400">Step 2</p>
-        <h1 className="mt-2 text-2xl font-semibold text-white">Drop your listings in plain language.</h1>
-        <p className="mt-2 text-slate-300">
-          Fill what you know. Leave what you don’t. The AI will use every active listing first, so even one unit makes your
-          bot smarter than portals.
-        </p>
-      </section>
+    <div className="p-8 space-y-12">
+      {/* Header Info */}
+      <div className="max-w-2xl">
+        <h2 className="text-2xl font-semibold text-apple-gray-600 mb-2">Property Listings</h2>
+        <p className="text-apple-gray-400">Add the specific units you are promoting. The AI will prioritize these in conversations.</p>
+      </div>
 
-      <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6">
-        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-wide text-emerald-400">Listing form</p>
-            <h2 className="text-lg font-semibold text-white">{form.id ? "Update listing" : "Add a new listing"}</h2>
-          </div>
-          {feedback && (
-            <span
-              className={`text-xs font-medium ${
-                feedback.type === "success" ? "text-emerald-400" : "text-red-400"
-              }`}
-            >
-              {feedback.message}
-            </span>
-          )}
+      {/* Form Section */}
+      <div className="bg-apple-gray-50 rounded-apple-md border border-apple-gray-100 p-8">
+        <div className="flex justify-between items-center mb-8">
+           <h3 className="text-sm font-bold uppercase tracking-widest text-apple-gray-400">
+             {form.id ? 'Edit Listing' : 'New Listing'}
+           </h3>
+           {feedback && (
+             <span className={`text-sm font-medium ${feedback.type === 'success' ? 'text-apple-green' : 'text-apple-red'}`}>
+                {feedback.message}
+             </span>
+           )}
         </div>
-        <div className="mt-4 grid gap-3 md:grid-cols-2">
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Title</label>
-            <input
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.title}
-              onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
-              placeholder="Sea View 2BR – Palm Jumeirah"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Area / community</label>
-            <input
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.area}
-              onChange={(event) => setForm((prev) => ({ ...prev, area: event.target.value }))}
-              placeholder="Palm Jumeirah"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Type</label>
-            <select
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.type}
-              onChange={(event) => setForm((prev) => ({ ...prev, type: event.target.value }))}
-            >
-              <option value="apartment">Apartment</option>
-              <option value="villa">Villa</option>
-              <option value="townhouse">Townhouse</option>
-              <option value="penthouse">Penthouse</option>
-            </select>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Beds</label>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <div className="space-y-2">
+              <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Title</label>
               <input
-                type="number"
-                min={0}
-                className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-                value={form.beds}
-                onChange={(event) => setForm((prev) => ({ ...prev, beds: event.target.value }))}
+                className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-4 py-3 focus:ring-2 focus:ring-apple-blue/10 focus:border-apple-blue outline-none transition-all"
+                value={form.title}
+                onChange={(e) => setForm(f => ({ ...f, title: e.target.value }))}
+                placeholder="e.g. Luxury 3BR with Marina View"
               />
-            </div>
-            <div>
-              <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Baths</label>
+           </div>
+           <div className="space-y-2">
+              <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Community</label>
               <input
-                type="number"
-                min={0}
-                className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-                value={form.baths}
-                onChange={(event) => setForm((prev) => ({ ...prev, baths: event.target.value }))}
+                className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-4 py-3 focus:ring-2 focus:ring-apple-blue/10 focus:border-apple-blue outline-none transition-all"
+                value={form.area}
+                onChange={(e) => setForm(f => ({ ...f, area: e.target.value }))}
+                placeholder="e.g. Dubai Marina"
               />
-            </div>
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Price (AED)</label>
-            <input
-              type="number"
-              min={0}
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.price_aed}
-              onChange={(event) => setForm((prev) => ({ ...prev, price_aed: event.target.value }))}
-              placeholder="2000000"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Status</label>
-            <select
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.status}
-              onChange={(event) => setForm((prev) => ({ ...prev, status: event.target.value }))}
-            >
-              <option value="available">Available</option>
-              <option value="reserved">Reserved</option>
-              <option value="sold">Sold</option>
-            </select>
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Handover</label>
-            <input
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.handover}
-              onChange={(event) => setForm((prev) => ({ ...prev, handover: event.target.value }))}
-              placeholder="Q4 2025"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Purpose</label>
-            <select
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.purpose}
-              onChange={(event) => setForm((prev) => ({ ...prev, purpose: event.target.value }))}
-            >
-              <option value="buy">Buy</option>
-              <option value="rent">Rent</option>
-              <option value="investment">Investment</option>
-            </select>
-          </div>
-          <div className="md:col-span-2">
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">
-              Key points (one per line or comma)
-            </label>
-            <textarea
-              rows={4}
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.keyPointsInput}
-              onChange={(event) => setForm((prev) => ({ ...prev, keyPointsInput: event.target.value }))}
-              placeholder={"Marina view\nPost-handover payment plan"}
-            />
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="listing-active"
-              checked={form.active}
-              onChange={(event) => setForm((prev) => ({ ...prev, active: event.target.checked }))}
-              className="h-4 w-4"
-            />
-            <label htmlFor="listing-active" className="text-xs uppercase tracking-wide text-slate-400">
-              Active
-            </label>
-          </div>
+           </div>
+
+           <div className="grid grid-cols-3 gap-4">
+              <div className="space-y-2">
+                 <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Type</label>
+                 <select 
+                   className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-3 py-3 text-sm"
+                   value={form.type}
+                   onChange={(e) => setForm(f => ({ ...f, type: e.target.value }))}
+                 >
+                    <option value="apartment">Apt</option>
+                    <option value="villa">Villa</option>
+                    <option value="penthouse">Penthouse</option>
+                 </select>
+              </div>
+              <div className="space-y-2">
+                 <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Beds</label>
+                 <input
+                   type="number"
+                   className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-3 py-3"
+                   value={form.beds}
+                   onChange={(e) => setForm(f => ({ ...f, beds: e.target.value }))}
+                 />
+              </div>
+              <div className="space-y-2">
+                 <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Price (AED)</label>
+                 <input
+                   type="number"
+                   className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-3 py-3"
+                   value={form.price_aed}
+                   onChange={(e) => setForm(f => ({ ...f, price_aed: e.target.value }))}
+                 />
+              </div>
+           </div>
+
+           <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                 <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Status</label>
+                 <select 
+                    className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-3 py-3 text-sm"
+                    value={form.status}
+                    onChange={(e) => setForm(f => ({ ...f, status: e.target.value }))}
+                 >
+                    <option value="available">Available</option>
+                    <option value="reserved">Reserved</option>
+                    <option value="sold">Sold</option>
+                 </select>
+              </div>
+              <div className="space-y-2">
+                 <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Handover</label>
+                 <input
+                   className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-4 py-3"
+                   value={form.handover}
+                   onChange={(e) => setForm(f => ({ ...f, handover: e.target.value }))}
+                   placeholder="Q4 2025"
+                 />
+              </div>
+           </div>
+
+           <div className="md:col-span-2 space-y-2">
+              <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Key Selling Points</label>
+              <textarea
+                rows={3}
+                className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-4 py-3 focus:ring-2 focus:ring-apple-blue/10 focus:border-apple-blue outline-none transition-all"
+                value={form.keyPointsInput}
+                onChange={(e) => setForm(f => ({ ...f, keyPointsInput: e.target.value }))}
+                placeholder="High ROI, Prime Location, Fully Furnished..."
+              />
+           </div>
         </div>
-        <div className="mt-4 flex flex-wrap items-center justify-end gap-3">
-          {form.id && (
-            <button
-              onClick={() => setForm(createEmptyForm())}
-              className="rounded-full border border-white/10 px-4 py-2 text-xs text-slate-300"
-              disabled={saving}
-            >
-              Cancel edit
-            </button>
-          )}
-          <button
-            onClick={handleSubmit}
-            disabled={saving}
-            className="rounded-full bg-emerald-600 px-5 py-2 text-sm font-semibold text-white disabled:opacity-50"
-          >
-            {saving ? "Saving..." : form.id ? "Update listing" : "Publish listing"}
-          </button>
+
+        <div className="mt-8 flex items-center justify-end gap-4">
+           {form.id && (
+             <button 
+               onClick={() => setForm(createEmptyForm())}
+               className="text-apple-gray-400 hover:text-apple-gray-600 font-medium"
+             >
+               Cancel
+             </button>
+           )}
+           <button
+             onClick={handleSubmit}
+             disabled={saving}
+             className="apple-button-primary px-8"
+           >
+             {saving ? 'Saving...' : form.id ? 'Update Listing' : 'Add Listing'}
+           </button>
         </div>
       </div>
 
-      <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6">
-        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-wide text-emerald-400">Your units</p>
-            <h2 className="text-lg font-semibold text-white">Current listings</h2>
-          </div>
-          {loading && <span className="text-xs text-slate-500">Loading...</span>}
-        </div>
-        {listings.length === 0 && !loading ? (
-          <p className="mt-4 rounded-2xl border border-dashed border-white/10 p-4 text-sm text-slate-400">
-            No listings yet. Add your hero unit above and the AI will start selling it right away.
-          </p>
-        ) : (
-          <div className="mt-4 space-y-3">
-            {listings.map((listing) => (
-              <div
-                key={listing.id}
-                className="rounded-2xl border border-white/10 bg-slate-900/40 p-4 text-sm"
-              >
-                <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <p className="text-base font-semibold text-white">{listing.title}</p>
-                    <p className="text-xs text-slate-400">
-                      {listing.area} · {listing.type} · {listing.beds} BR / {listing.baths} BA
-                    </p>
+      {/* List Section */}
+      <div className="space-y-4">
+         <h3 className="text-sm font-bold uppercase tracking-widest text-apple-gray-400">Your Inventory</h3>
+         
+         {loading ? (
+            <div className="text-center py-20 bg-white rounded-apple-lg border border-apple-gray-50 text-apple-gray-300">
+               Loading inventory...
+            </div>
+         ) : listings.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-apple-lg border border-dashed border-apple-gray-200 text-apple-gray-400 italic">
+               No properties listed yet.
+            </div>
+         ) : (
+            <div className="grid grid-cols-1 gap-4">
+               {listings.map(listing => (
+                  <div key={listing.id} className="bg-white p-6 rounded-apple-lg border border-apple-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:shadow-sm transition-shadow">
+                     <div className="space-y-1">
+                        <div className="flex items-center gap-3">
+                           <h4 className="text-lg font-semibold text-apple-gray-600">{listing.title}</h4>
+                           <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                              listing.active ? 'bg-apple-green/10 text-apple-green' : 'bg-apple-gray-100 text-apple-gray-400'
+                           }`}>
+                              {listing.active ? 'Active' : 'Paused'}
+                           </span>
+                        </div>
+                        <p className="text-sm text-apple-gray-400">{listing.area} • {listing.beds} BR • {listing.type}</p>
+                     </div>
+                     
+                     <div className="flex items-center gap-8">
+                        <div className="text-right">
+                           <p className="text-lg font-bold text-apple-gray-600">{priceFormatter.format(listing.price_aed)}</p>
+                           <p className="text-[10px] text-apple-gray-400 uppercase tracking-widest font-bold">{listing.status}</p>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                           <button 
+                             onClick={() => handleEdit(listing)}
+                             className="p-2 hover:bg-apple-gray-50 rounded-full transition-colors"
+                             title="Edit"
+                           >
+                              ✏️
+                           </button>
+                           <button 
+                             onClick={() => handleDelete(listing)}
+                             className="p-2 hover:bg-apple-red/5 text-apple-red rounded-full transition-colors"
+                             title="Delete"
+                           >
+                              🗑️
+                           </button>
+                        </div>
+                     </div>
                   </div>
-                  <div className="text-right text-sm font-semibold text-emerald-400">
-                    {priceFormatter.format(listing.price_aed)}
-                  </div>
-                </div>
-                <div className="mt-2 flex flex-wrap gap-2 text-[11px] uppercase tracking-wide">
-                  <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">{listing.status}</span>
-                  <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">{listing.purpose}</span>
-                  {listing.handover && (
-                    <span className="rounded-full bg-slate-800 px-3 py-1 text-slate-300">Handover: {listing.handover}</span>
-                  )}
-                  <span
-                    className={`rounded-full px-3 py-1 ${
-                      listing.active ? "bg-emerald-500/10 text-emerald-300" : "bg-slate-800 text-slate-400"
-                    }`}
-                  >
-                    {listing.active ? "Active" : "Paused"}
-                  </span>
-                </div>
-                {listing.key_points?.length ? (
-                  <p className="mt-3 text-xs text-slate-400">
-                    Key points: {listing.key_points.slice(0, 6).join(" · ")}
-                  </p>
-                ) : null}
-                <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                  <button
-                    className="rounded-lg border border-slate-700 px-3 py-1 text-slate-200"
-                    onClick={() => handleEdit(listing)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="rounded-lg border border-slate-700 px-3 py-1 text-slate-200"
-                    onClick={() => handleToggleActive(listing)}
-                  >
-                    {listing.active ? "Pause" : "Activate"}
-                  </button>
-                  <button
-                    className="rounded-lg border border-red-500/40 px-3 py-1 text-red-300"
-                    onClick={() => handleDelete(listing)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+               ))}
+            </div>
+         )}
       </div>
     </div>
   );

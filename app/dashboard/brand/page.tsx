@@ -136,126 +136,101 @@ export default function BrandPage() {
     }
   };
 
-  const badgeColor = botMeta.active
+  const statusColor = botMeta.active
     ? botMeta.expiresAt && botMeta.expiresAt < Date.now()
-      ? "text-amber-400"
-      : "text-emerald-400"
-    : "text-slate-400";
-
-  const expiresLabel = botMeta.expiresAt
-    ? new Date(botMeta.expiresAt).toLocaleString()
-    : "Not scheduled";
+      ? "bg-amber-100 text-amber-700"
+      : "bg-apple-green text-white"
+    : "bg-apple-gray-100 text-apple-gray-400";
 
   return (
-    <div className="space-y-6">
-      <section className="rounded-3xl border border-white/10 bg-slate-900/70 p-6 text-sm text-slate-200">
-        <p className="text-xs uppercase tracking-[0.35em] text-emerald-400">Step 1</p>
-        <h1 className="mt-2 text-2xl font-semibold text-white">Tell the bot who you are.</h1>
-        <p className="mt-2 text-slate-300">
-          Write the name people see on your Instagram, pick the tone, and drop the WhatsApp number that should receive
-          leads. That’s it. The bot will mirror this instantly.
-        </p>
-        <p className="mt-2 rounded-2xl border border-white/10 bg-black/20 p-3 text-xs text-slate-400">
-          You’re editing <code className="rounded bg-slate-800 px-1">bots/{botId}</code>. No email or support ticket needed.
-          Hit save and continue to listings.
-        </p>
-      </section>
+    <div className="p-8">
+      <div className="flex flex-col md:flex-row gap-12">
+        <div className="flex-1 space-y-8">
+           <div>
+              <h2 className="text-2xl font-semibold text-apple-gray-600 mb-2">Brand Identity</h2>
+              <p className="text-apple-gray-400">Configure how your AI assistant represents your brand.</p>
+           </div>
 
-      <div className="grid gap-4 md:grid-cols-[1.6fr,1fr]">
-        <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-white">Brand card</h2>
-            {feedback && (
-              <span
-                className={`text-xs font-medium ${
-                  feedback.type === "success" ? "text-emerald-400" : "text-red-400"
-                }`}
-              >
-                {feedback.message}
-              </span>
-            )}
-          </div>
-          {loading ? (
-            <p className="mt-4 text-sm text-slate-500">Loading your info…</p>
-          ) : (
-            <div className="mt-4 space-y-4">
-              <div>
-                <p className="text-xs uppercase tracking-wide text-slate-400">Brand name *</p>
-                <p className="text-[12px] text-slate-500">Use the name buyers recognise on Instagram.</p>
-                <input
-                  className="mt-1 w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none"
-                  value={form.brand_name}
-                  onChange={(event) => setForm((prev) => ({ ...prev, brand_name: event.target.value }))}
-                  placeholder="Homes Real Estate"
-                />
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-wide text-slate-400">City focus</p>
-                <p className="text-[12px] text-slate-500">Usually “Dubai”. Change only if your bot sells another city.</p>
-                <input
-                  className="mt-1 w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none"
-                  value={form.city_focus}
-                  onChange={(event) => setForm((prev) => ({ ...prev, city_focus: event.target.value }))}
-                />
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-wide text-slate-400">Tone</p>
-                <p className="text-[12px] text-slate-500">Pick how the bot should talk.</p>
-                <select
-                  className="mt-1 w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none"
-                  value={form.tone}
-                  onChange={(event) => setForm((prev) => ({ ...prev, tone: event.target.value as BotFormState["tone"] }))}
-                >
-                  {toneOptions.map((tone) => (
-                    <option key={tone} value={tone}>
-                      {tone}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-wide text-slate-400">WhatsApp number *</p>
-                <p className="text-[12px] text-slate-500">Include the country code. Leads go straight here.</p>
-                <input
-                  className="mt-1 w-full rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none"
-                  value={form.whatsapp_number}
-                  onChange={(event) => setForm((prev) => ({ ...prev, whatsapp_number: event.target.value }))}
-                  placeholder="+9715xxxxxxx"
-                />
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <button
-                  onClick={() => setForm(createEmptyForm())}
-                  className="rounded-full border border-white/10 px-5 py-2 text-xs text-slate-300"
-                  disabled={saving}
-                >
-                  Clear form
-                </button>
-                <button
-                  onClick={handleSave}
-                  disabled={saving}
-                  className="rounded-full bg-emerald-600 px-6 py-2 text-sm font-semibold text-white disabled:opacity-50"
-                >
-                  {saving ? "Saving…" : "Save brand"}
-                </button>
-              </div>
-            </div>
-          )}
+           {loading ? (
+             <div className="h-64 flex items-center justify-center">
+                <p className="text-apple-gray-300">Loading settings...</p>
+             </div>
+           ) : (
+             <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Brand Name</label>
+                  <input
+                    className="w-full bg-apple-gray-50 border border-apple-gray-100 rounded-apple-sm px-4 py-3 focus:bg-white focus:ring-2 focus:ring-apple-blue/10 focus:border-apple-blue outline-none transition-all"
+                    value={form.brand_name}
+                    onChange={(e) => setForm(f => ({ ...f, brand_name: e.target.value }))}
+                    placeholder="e.g. Luxe Habitats"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">City Focus</label>
+                    <input
+                      className="w-full bg-apple-gray-50 border border-apple-gray-100 rounded-apple-sm px-4 py-3 focus:bg-white focus:ring-2 focus:ring-apple-blue/10 focus:border-apple-blue outline-none transition-all"
+                      value={form.city_focus}
+                      onChange={(e) => setForm(f => ({ ...f, city_focus: e.target.value }))}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Tone of Voice</label>
+                    <select
+                      className="w-full bg-apple-gray-50 border border-apple-gray-100 rounded-apple-sm px-4 py-3 focus:bg-white focus:ring-2 focus:ring-apple-blue/10 focus:border-apple-blue outline-none transition-all appearance-none"
+                      value={form.tone}
+                      onChange={(e) => setForm(f => ({ ...f, tone: e.target.value as any }))}
+                    >
+                      {toneOptions.map(t => <option key={t} value={t}>{t}</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">WhatsApp Number</label>
+                  <input
+                    className="w-full bg-apple-gray-50 border border-apple-gray-100 rounded-apple-sm px-4 py-3 focus:bg-white focus:ring-2 focus:ring-apple-blue/10 focus:border-apple-blue outline-none transition-all"
+                    value={form.whatsapp_number}
+                    onChange={(e) => setForm(f => ({ ...f, whatsapp_number: e.target.value }))}
+                    placeholder="+971 50 000 0000"
+                  />
+                  <p className="text-[10px] text-apple-gray-400 italic">Leads will be sent here instantly.</p>
+                </div>
+
+                <div className="flex items-center gap-4 pt-4">
+                   <button
+                     onClick={handleSave}
+                     disabled={saving}
+                     className="apple-button-primary"
+                   >
+                     {saving ? "Saving..." : "Save Changes"}
+                   </button>
+                   {feedback && (
+                     <span className={`text-sm font-medium ${feedback.type === 'success' ? 'text-apple-green' : 'text-apple-red'}`}>
+                        {feedback.message}
+                     </span>
+                   )}
+                </div>
+             </div>
+           )}
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6 text-sm text-slate-300">
-          <p className="text-xs uppercase tracking-wide text-emerald-400">Bot status</p>
-          <p className={`mt-2 text-2xl font-semibold text-white ${badgeColor}`}>
-            {botMeta.active ? (botMeta.expiresAt && botMeta.expiresAt < Date.now() ? "Expired" : "Active") : "Inactive"}
-          </p>
-          <p className="text-xs text-slate-400">Renews: {expiresLabel}</p>
-          <ul className="mt-4 space-y-2 text-xs text-slate-400">
-            <li>• Each payment adds 30 days automatically.</li>
-            <li>• Need to pause? Set expiresAt to yesterday.</li>
-            <li>
-              • Share <span className="text-emerald-400">/bot/{botId}</span> with your client to test.
-            </li>
-          </ul>
+        <div className="w-full md:w-72">
+           <div className="bg-apple-gray-50 rounded-apple-md p-6 border border-apple-gray-100">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-apple-gray-400 mb-4">Status</h3>
+              <div className={`inline-flex px-3 py-1 rounded-full text-xs font-bold mb-4 ${statusColor}`}>
+                 {botMeta.active ? 'ACTIVE' : 'INACTIVE'}
+              </div>
+              <div className="space-y-4 text-[12px] text-apple-gray-500">
+                 <p>Your bot is currently {botMeta.active ? 'live' : 'offline'}.</p>
+                 <div className="pt-4 border-t border-apple-gray-100">
+                    <p className="font-bold text-apple-gray-600 mb-1">Bot ID</p>
+                    <code className="bg-apple-gray-200 px-2 py-0.5 rounded text-[10px]">{botId}</code>
+                 </div>
+              </div>
+           </div>
         </div>
       </div>
     </div>

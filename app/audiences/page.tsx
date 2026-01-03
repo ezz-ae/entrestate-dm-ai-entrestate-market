@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 
 const audiencePresets = [
   {
@@ -52,133 +53,130 @@ export default function AudiencesPage() {
   ]);
 
   return (
-    <main className="mx-auto max-w-5xl space-y-10 px-6 py-16">
-      <section className="rounded-3xl border border-slate-800 bg-slate-950/80 p-8">
-        <p className="text-xs uppercase tracking-[0.3em] text-emerald-400">Audience Lab</p>
-        <h1 className="mt-3 text-4xl font-semibold text-white">Launch Meta + Google ads without waiting on a marketer.</h1>
-        <p className="mt-4 text-slate-300">
-          Build custom audiences, lookalikes, behavior stacks, and keyword plans in seconds. Export the list, plug into
-          Meta Ads or Google Ads, and keep your Dubai pipeline moving.
-        </p>
-      </section>
-
-      <section className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
-        <div className="flex flex-col gap-6 lg:flex-row">
-          <div className="flex-1 space-y-4">
-            <p className="text-sm uppercase tracking-wide text-emerald-400">Custom audience</p>
-            <h2 className="text-2xl font-semibold text-white">Choose who should see your ad.</h2>
-            <div className="space-y-4 text-sm text-slate-200">
-              <label className="block">
-                <span className="text-xs uppercase tracking-wide text-slate-400">Audience name</span>
-                <input
-                  value={customAudienceName}
-                  onChange={(event) => setCustomAudienceName(event.target.value)}
-                  className="mt-1 w-full rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-2"
-                />
-              </label>
-              <label className="block">
-                <span className="text-xs uppercase tracking-wide text-slate-400">Budget / ticket size</span>
-                <input
-                  value={budget}
-                  onChange={(event) => setBudget(event.target.value)}
-                  className="mt-1 w-full rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-2"
-                />
-              </label>
-              <label className="block">
-                <span className="text-xs uppercase tracking-wide text-slate-400">Nationality focus</span>
-                <input
-                  value={nationality}
-                  onChange={(event) => setNationality(event.target.value)}
-                  className="mt-1 w-full rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-2"
-                />
-              </label>
-            </div>
-          </div>
-          <div className="flex-1 rounded-3xl border border-slate-800 bg-slate-900/40 p-5 text-sm text-slate-200">
-            <p className="text-xs uppercase tracking-wide text-slate-500">Audience output</p>
-            <div className="mt-2 space-y-2">
-              <p><span className="text-slate-400">Name:</span> {customAudienceName}</p>
-              <p><span className="text-slate-400">Budget:</span> {budget}</p>
-              <p><span className="text-slate-400">Nationality:</span> {nationality}</p>
-              <p><span className="text-slate-400">Behavior:</span> Mortgage intent • Property portal visitors • High net worth</p>
-              <p><span className="text-slate-400">Exclude:</span> Existing CRM leads</p>
-            </div>
-          </div>
+    <main className="bg-white min-h-screen">
+      {/* Hero Section */}
+      <section className="py-24 px-6 bg-[#f5f5f7]">
+        <div className="max-w-[1200px] mx-auto text-center animate-fade-in">
+           <span className="text-apple-blue font-bold tracking-widest text-[12px] uppercase mb-4 block">Audience Intelligence</span>
+           <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-apple-gray-600 mb-8 leading-[1.1]">
+              Targeting built for <br /> the Dubai market.
+           </h1>
+           <p className="text-xl md:text-2xl text-apple-gray-400 max-w-2xl mx-auto mb-12">
+              Generate custom audiences, lookalike seeds, and keyword plans designed specifically for real estate conversion.
+           </p>
+           <Link href="/dashboard" className="apple-button-primary text-xl px-12 py-5">
+              Launch your ads
+           </Link>
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
-          <p className="text-sm uppercase tracking-wide text-emerald-400">Lookalike & behavior set</p>
-          <div className="mt-3 flex flex-col gap-4">
-            <label className="text-xs uppercase tracking-wide text-slate-400">
-              Choose preset
-              <select
-                className="mt-1 w-full rounded-2xl border border-slate-800 bg-slate-900/60 px-4 py-2"
-                value={selectedPreset}
-                onChange={(event) => setSelectedPreset(event.target.value)}
-              >
-                {audiencePresets.map((preset) => (
-                  <option key={preset.region} value={preset.region}>
-                    {preset.region} · {preset.buyers}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-200">
-              <p className="text-xs uppercase tracking-wide text-slate-500">Recommended stack</p>
-              <p className="mt-1 text-lg font-semibold text-white">{preset.region} • {preset.buyers}</p>
-              <p className="text-xs text-slate-400">Lookalike seed: {preset.lookalikeSeed}</p>
-              <div className="mt-3 flex flex-wrap gap-2 text-xs">
-                {preset.behaviors.map((item) => (
-                  <span key={item} className="rounded-full bg-emerald-500/10 px-3 py-1 text-emerald-200">
-                    {item}
-                  </span>
-                ))}
-              </div>
+      {/* Lab Interface Simulation */}
+      <section className="py-24 px-6">
+        <div className="max-w-[1200px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            {/* Control Panel */}
+            <div className="lg:col-span-5 space-y-12">
+               <div className="space-y-6">
+                  <h2 className="text-3xl font-semibold text-apple-gray-600 tracking-tight">Audience Lab</h2>
+                  <p className="text-apple-gray-400 text-lg leading-relaxed">
+                     Fine-tune who sees your property listings. Our presets are built on millions of data points from successful Dubai campaigns.
+                  </p>
+               </div>
+
+               <div className="bg-apple-gray-50 rounded-[32px] p-8 border border-apple-gray-100 space-y-6">
+                  <div className="space-y-2">
+                     <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Audience Region</label>
+                     <select 
+                       className="w-full bg-white border border-apple-gray-200 rounded-apple-sm px-4 py-3 outline-none focus:ring-2 focus:ring-apple-blue/10 appearance-none"
+                       value={selectedPreset}
+                       onChange={(e) => setSelectedPreset(e.target.value)}
+                     >
+                        {audiencePresets.map(p => <option key={p.region} value={p.region}>{p.region}</option>)}
+                     </select>
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Budget Range</label>
+                     <input 
+                       className="w-full bg-white border border-apple-gray-200 rounded-apple-sm px-4 py-3 outline-none focus:ring-2 focus:ring-apple-blue/10"
+                       value={budget}
+                       onChange={(e) => setBudget(e.target.value)}
+                     />
+                  </div>
+               </div>
+            </div>
+
+            {/* Preview Panel */}
+            <div className="lg:col-span-7">
+               <div className="bg-white rounded-[40px] border border-apple-gray-100 shadow-[0_32px_64px_rgba(0,0,0,0.06)] overflow-hidden">
+                  <div className="px-10 py-8 border-b border-apple-gray-50 bg-apple-gray-50/30">
+                     <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-semibold text-apple-gray-600">Audience Strategy</h3>
+                        <span className="text-[10px] font-bold text-apple-green bg-apple-green/10 px-3 py-1 rounded-full uppercase tracking-widest">Optimized</span>
+                     </div>
+                  </div>
+                  <div className="p-10 space-y-10">
+                     <div className="grid grid-cols-2 gap-8">
+                        <div>
+                           <p className="text-[10px] font-bold text-apple-gray-400 uppercase tracking-widest mb-2">Meta Audience</p>
+                           <p className="text-xl font-semibold text-apple-gray-600 mb-4">{preset.buyers}</p>
+                           <div className="flex flex-wrap gap-2">
+                              {preset.behaviors.map(b => (
+                                 <span key={b} className="text-[12px] bg-apple-gray-50 border border-apple-gray-100 px-3 py-1 rounded-full text-apple-gray-500">{b}</span>
+                              ))}
+                           </div>
+                        </div>
+                        <div>
+                           <p className="text-[10px] font-bold text-apple-gray-400 uppercase tracking-widest mb-2">Lookalike Seed</p>
+                           <p className="text-sm font-medium text-apple-gray-600 bg-apple-blue/5 border border-apple-blue/10 p-3 rounded-apple-sm">
+                              {preset.lookalikeSeed}
+                           </p>
+                        </div>
+                     </div>
+
+                     <div className="pt-10 border-t border-apple-gray-50">
+                        <p className="text-[10px] font-bold text-apple-gray-400 uppercase tracking-widest mb-4">Google Search Keywords</p>
+                        <div className="flex flex-wrap gap-3">
+                           {preset.keywords.map(k => (
+                              <code key={k} className="text-[13px] bg-apple-gray-600 text-white px-3 py-1 rounded-apple-sm">+{k.replace(/\s/g, ' +')}</code>
+                           ))}
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
           </div>
-        </div>
-        <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
-          <p className="text-sm uppercase tracking-wide text-emerald-400">Google keyword plan</p>
-          <div className="mt-3 grid gap-4 text-sm text-slate-200 md:grid-cols-2">
-            {googleBuckets.map((bucket) => (
-              <div key={bucket.label} className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4">
-                <p className="text-xs uppercase tracking-wide text-slate-500">{bucket.label}</p>
-                <ul className="mt-2 space-y-1 text-slate-200">
-                  {bucket.values.map((value) => (
-                    <li key={value}>{value}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          <p className="mt-4 text-xs text-slate-500">Mix any combination and push straight into Google Ads Editor.</p>
         </div>
       </section>
 
-      <section className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
-        <div className="grid gap-6 lg:grid-cols-2">
-          <div>
-            <p className="text-sm uppercase tracking-wide text-emerald-400">Behavior library</p>
-            <div className="mt-3 flex flex-wrap gap-2 text-xs text-slate-200">
-              {behaviors.map((item) => (
-                <span key={item} className="rounded-full border border-slate-700 px-3 py-1">
-                  {item}
-                </span>
-              ))}
+      {/* Checklist Section */}
+      <section className="py-24 bg-apple-gray-50 px-6">
+         <div className="max-w-[1200px] mx-auto">
+            <div className="text-center mb-16">
+               <h2 className="text-4xl font-semibold text-apple-gray-600 mb-4 tracking-tight">Export and Launch.</h2>
+               <p className="text-xl text-apple-gray-400">The last mile of your marketing workflow.</p>
             </div>
-          </div>
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-4 text-sm text-slate-200">
-            <p className="text-xs uppercase tracking-wide text-slate-500">Export checklist</p>
-            <ul className="mt-2 space-y-2">
-              <li>• Download CSV of custom + lookalike audiences.</li>
-              <li>• Copy/paste behavior stack into Meta Ads.</li>
-              <li>• Export Google keyword clusters.</li>
-              <li>• Share with your media buyer or run it yourself.</li>
-            </ul>
-          </div>
-        </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+               {[
+                  { title: "Meta Business Suite", desc: "Copy/paste your behavior stack and upload custom seeds directly into Meta Ads Manager." },
+                  { title: "Google Ads Editor", desc: "Export keyword clusters designed to capture high-intent property searchers in Dubai." },
+                  { title: "WhatsApp Direct", desc: "Leads qualified by your Reality Expert flow directly into your WhatsApp with audience context." }
+               ].map(item => (
+                  <div key={item.title} className="space-y-4">
+                     <h4 className="text-xl font-semibold text-apple-gray-600">{item.title}</h4>
+                     <p className="text-apple-gray-400 leading-relaxed">{item.desc}</p>
+                  </div>
+               ))}
+            </div>
+         </div>
+      </section>
+
+      {/* CTA Bottom */}
+      <section className="py-32 px-6 text-center">
+         <h2 className="text-5xl font-semibold tracking-tight text-apple-gray-600 mb-8">Stop wasting ad spend.</h2>
+         <Link href="/dashboard" className="apple-button-primary text-xl px-12 py-5">
+            Get Targeted Now
+         </Link>
       </section>
     </main>
   );

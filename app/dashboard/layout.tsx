@@ -5,85 +5,89 @@ import DashboardProgress from "@/components/DashboardProgress";
 
 const navLinks = [
   {
-    label: "Brand setup",
-    hint: "Name, tone & WhatsApp",
+    label: "Brand",
+    icon: "🎨",
     href: "/dashboard/brand"
   },
   {
     label: "Listings",
-    hint: "Add units to sell",
+    icon: "🏠",
     href: "/dashboard/listings"
   },
   {
     label: "Events",
-    hint: "Roadshows & zooms",
+    icon: "📅",
     href: "/dashboard/events"
   },
   {
-    label: "Market data",
-    hint: "Projects & CSV",
+    label: "Projects",
+    icon: "🏙️",
     href: "/dashboard/projects"
   }
 ];
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 md:flex">
-      <aside className="hidden w-72 flex-col gap-6 border-r border-white/10 bg-gradient-to-b from-slate-950 to-slate-900 p-6 md:flex">
-        <div>
-          <p className="text-xs uppercase tracking-[0.35em] text-emerald-400">Entrestate</p>
-          <p className="mt-2 text-xl font-semibold">DM Control Room</p>
-          <p className="mt-1 text-sm text-slate-400">
-            Follow the steps below. No tech words, no emails required. Just fill the cards and hit save.
-          </p>
+    <div className="min-h-screen bg-apple-gray-50 flex flex-col md:flex-row">
+      {/* Mobile Nav */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-apple-gray-100 z-50 px-6 py-3 flex justify-between items-center">
+        {navLinks.map((link) => (
+          <Link key={link.href} href={link.href} className="flex flex-col items-center gap-1">
+            <span className="text-xl">{link.icon}</span>
+            <span className="text-[10px] font-medium text-apple-gray-500 uppercase tracking-tighter">{link.label}</span>
+          </Link>
+        ))}
+      </nav>
+
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:flex w-64 flex-col bg-white border-r border-apple-gray-100 p-6 fixed h-full">
+        <div className="mb-10">
+          <Link href="/" className="text-xl font-bold tracking-tight text-apple-gray-600">
+            Entrestate
+          </Link>
         </div>
-        <nav className="flex flex-col gap-3 text-sm">
+        
+        <nav className="flex-1 space-y-1">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-emerald-500/60 hover:bg-emerald-500/5"
+              className="flex items-center gap-3 px-4 py-3 rounded-apple-sm text-sm font-medium text-apple-gray-500 hover:bg-apple-gray-50 hover:text-black transition-all"
             >
-              <p className="font-semibold text-white">{link.label}</p>
-              <p className="text-xs text-slate-400">{link.hint}</p>
+              <span className="text-lg">{link.icon}</span>
+              {link.label}
             </Link>
           ))}
         </nav>
-        <div className="rounded-2xl border border-white/10 bg-slate-900/80 p-4 text-xs text-slate-400">
-          <p className="text-sm font-semibold text-white">Need help?</p>
-          <p>No email needed. Share your WhatsApp with support and we guide you live.</p>
+
+        <div className="mt-auto p-4 rounded-apple-md bg-apple-gray-50 border border-apple-gray-100">
+          <p className="text-xs font-semibold text-apple-gray-600 mb-1">Professional Plan</p>
+          <p className="text-[10px] text-apple-gray-400 leading-relaxed">
+            Your bot is active. Connect to Instagram to start qualifying leads.
+          </p>
         </div>
       </aside>
 
-      <main className="flex-1 space-y-6 p-4 md:p-8">
-        <div className="rounded-3xl border border-white/10 bg-slate-900/60 p-4 text-sm text-slate-300">
-          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      {/* Main Content */}
+      <main className="flex-1 md:ml-64 p-6 md:p-12 mb-20 md:mb-0">
+        <div className="max-w-4xl mx-auto space-y-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
             <div>
-              <p className="text-xs uppercase tracking-wide text-emerald-400">Start here</p>
-              <p className="text-base text-white">
-                Step 1: brand name & WhatsApp · Step 2: listings · Step 3: events · Step 4: market data.
-              </p>
+              <h1 className="text-3xl font-semibold tracking-tight text-apple-gray-600">Dashboard</h1>
+              <p className="text-apple-gray-400">Manage your AI real estate assistant.</p>
             </div>
-            <div className="text-xs text-slate-400">
-              No email, no ticket. Just click the card, fill the fields, press save.
-            </div>
+            <Link href="/bot/demo-bot" className="apple-button-secondary text-sm px-4 py-2">
+              Preview Bot
+            </Link>
+          </div>
+
+          <DashboardProgress />
+          <ActiveBotBanner />
+          
+          <div className="bg-white rounded-apple-lg border border-apple-gray-100 shadow-sm overflow-hidden">
+             {children}
           </div>
         </div>
-        <div className="grid gap-3 md:hidden">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="rounded-2xl border border-white/10 bg-slate-900/70 p-4"
-            >
-              <p className="text-sm font-semibold text-white">{link.label}</p>
-              <p className="text-xs text-slate-400">{link.hint}</p>
-            </Link>
-          ))}
-        </div>
-        <DashboardProgress />
-        <ActiveBotBanner />
-        {children}
       </main>
     </div>
   );

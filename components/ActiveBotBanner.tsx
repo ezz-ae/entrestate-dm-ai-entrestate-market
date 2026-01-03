@@ -40,71 +40,63 @@ export default function ActiveBotBanner() {
   };
 
   const clientBotLink = `${clientBotBase}/${botId}`;
-  const embedSnippet = `<iframe src="${widgetBase}/bot/${botId}" width="100%" height="520" style="border:0;border-radius:24px;max-width:420px;"></iframe>`;
   const igPdfLink = `/api/instructions/ig?botId=${encodeURIComponent(botId)}`;
 
   return (
-    <div className="mb-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-sm">
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div className="bg-white rounded-apple-lg border border-apple-gray-100 p-6 shadow-sm space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-apple-gray-50">
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-400">Active bot ID</p>
-          <p className="text-lg font-semibold text-white">{botId}</p>
-          <p className="text-xs text-slate-500">
-            Use the switcher to jump between brands. Every dashboard view filters by this bot ID.
-          </p>
+           <label className="text-[10px] font-bold uppercase tracking-widest text-apple-gray-400 mb-1 block">Bot Switcher</label>
+           <div className="flex items-center gap-2">
+              <input
+                className="bg-apple-gray-50 border border-apple-gray-100 rounded-apple-sm px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-apple-blue"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              <button 
+                onClick={handleSwitch}
+                disabled={isPending || inputValue === botId}
+                className="text-[12px] font-semibold text-apple-blue hover:text-apple-blue/80 disabled:opacity-30 transition-colors"
+              >
+                {isPending ? 'Switching...' : 'Switch'}
+              </button>
+           </div>
         </div>
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-          <input
-            className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none sm:w-48"
-            value={inputValue}
-            onChange={(event) => setInputValue(event.target.value)}
-            placeholder="demo-bot"
-          />
-          <button
-            onClick={handleSwitch}
-            disabled={isPending || inputValue.trim() === botId}
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
-          >
-            {isPending ? "Switching..." : "Switch bot"}
-          </button>
+        
+        <div className="text-right">
+           <label className="text-[10px] font-bold uppercase tracking-widest text-apple-gray-400 mb-1 block">Active Identity</label>
+           <p className="text-sm font-semibold text-apple-gray-600">{botId}</p>
         </div>
       </div>
 
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-400">Client bot link</p>
-          <a
-            href={clientBotLink}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-1 block font-mono text-emerald-400 break-all"
-          >
-            {clientBotLink}
-          </a>
-          <div className="mt-2 flex flex-wrap gap-3 text-xs">
-            <a
-              href={`/bot/${botId}`}
-              target="_blank"
-              rel="noreferrer"
-              className="text-slate-300 underline"
-            >
-              Preview bot
-            </a>
-            <a
-              href={igPdfLink}
-              className="text-emerald-400 underline"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Download IG instructions (PDF)
-            </a>
-          </div>
+           <h4 className="text-[12px] font-bold text-apple-gray-600 mb-2">Connect to Instagram</h4>
+           <p className="text-[12px] text-apple-gray-400 mb-4">Download the step-by-step instructions to link your AI bot to your Instagram account.</p>
+           <a 
+             href={igPdfLink}
+             target="_blank"
+             rel="noreferrer"
+             className="apple-button-secondary w-full py-2 text-xs"
+           >
+             Download Setup Guide (PDF)
+           </a>
         </div>
+        
         <div>
-          <p className="text-xs uppercase tracking-wide text-slate-400">Embed anywhere</p>
-          <pre className="mt-1 overflow-x-auto rounded-lg border border-slate-800 bg-black/40 p-3 text-[11px] leading-relaxed text-slate-200">
-            <code>{embedSnippet}</code>
-          </pre>
+           <h4 className="text-[12px] font-bold text-apple-gray-600 mb-2">Direct Link</h4>
+           <p className="text-[12px] text-apple-gray-400 mb-4">Share this link with clients or use it in your bio to launch the AI assistant directly.</p>
+           <div className="flex items-center gap-2">
+              <code className="flex-1 bg-apple-gray-50 p-2 rounded text-[10px] text-apple-gray-500 truncate border border-apple-gray-100">
+                {clientBotLink}
+              </code>
+              <button 
+                onClick={() => navigator.clipboard.writeText(clientBotLink)}
+                className="text-apple-blue hover:bg-apple-blue/5 p-2 rounded-full transition-colors"
+              >
+                📋
+              </button>
+           </div>
         </div>
       </div>
     </div>

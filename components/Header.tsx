@@ -3,24 +3,28 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="mx-auto flex max-w-6xl items-center justify-between p-6">
-      <Link href="/" className="text-lg font-semibold text-white">
-        Entrestate DM AI
-      </Link>
-      <nav className="flex items-center gap-6">
-        <Link href="/features" className="text-sm text-slate-300 hover:text-white">
-          Features
+    <header className="sticky top-0 z-50 bg-[#1d1d1f] border-b border-white/5">
+      <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 h-12">
+        <Link href="/" className="text-[19px] font-semibold tracking-tight text-white/90">
+          Entrestate
         </Link>
-        <Link href="/pricing" className="text-sm text-slate-300 hover:text-white">
-          Pricing
-        </Link>
-        <Link href="/payment" className="text-sm text-slate-300 hover:text-white">
-          Payment
-        </Link>
-        <Link href="/dashboard" className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white">
-          Dashboard
-        </Link>
-      </nav>
+        <nav className="hidden md:flex items-center gap-8">
+          <Link href="/features" className="text-xs font-medium text-white/60 hover:text-white transition-colors">
+            Features
+          </Link>
+          <Link href="/audiences" className="text-xs font-medium text-white/60 hover:text-white transition-colors">
+            Audiences
+          </Link>
+          <Link href="/pricing" className="text-xs font-medium text-white/60 hover:text-white transition-colors">
+            Pricing
+          </Link>
+        </nav>
+        <div className="flex items-center gap-4">
+          <Link href="/dashboard" className="text-[11px] px-4 py-1.5 bg-white text-black rounded-full font-bold hover:bg-white/90 transition-colors uppercase tracking-wider">
+            Get Started
+          </Link>
+        </div>
+      </div>
     </header>
   );
 };

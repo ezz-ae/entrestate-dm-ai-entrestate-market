@@ -1,83 +1,69 @@
 
-import PageHeader from "@/components/ui/PageHeader";
-import Section from "@/components/ui/Section";
-import Card from "@/components/ui/Card";
-import Button from "@/components/ui/Button";
-
-const pricingTiers = [
-  {
-    name: "Solo Broker",
-    price: "$49/mo",
-    features: [
-      "Instagram DM Bot",
-      "WhatsApp Lead Handoff",
-      "Website Embed",
-      "QR Code Generation",
-      "Basic Analytics"
-    ]
-  },
-  {
-    name: "Agency",
-    price: "$199/mo",
-    features: [
-      "All Solo Broker features",
-      "Up to 5 Broker Accounts",
-      "Advanced Analytics",
-      "Team Collaboration",
-      "Priority Support"
-    ]
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    features: [
-      "All Agency features",
-      "Unlimited Broker Accounts",
-      "Custom Integrations",
-      "Dedicated Account Manager",
-      "White-labeling"
-    ]
-  }
-];
+import Link from "next/link";
 
 export default function PricingPage() {
   return (
-    <main>
-      <Section>
-        <PageHeader subtitle="Find the perfect plan for your business" title="Pricing" />
-        <div className="grid gap-6 md:grid-cols-3">
-          {pricingTiers.map((tier) => (
-            <Card key={tier.name} className="flex flex-col">
-              <div className="flex-1">
-                <h3 className="text-2xl font-semibold text-white">{tier.name}</h3>
-                <p className="mt-2 text-4xl font-bold text-white">{tier.price}</p>
-                <ul className="mt-6 space-y-4">
-                  {tier.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3">
-                      <svg
-                        className="h-5 w-5 text-emerald-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span className="text-slate-300">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <Button href="/payment" className="mt-8 w-full bg-emerald-600 shadow-emerald-600/30">
-                Get Started
-              </Button>
-            </Card>
-          ))}
+    <main className="bg-white">
+      <section className="py-24 px-6 text-center">
+        <div className="max-w-[800px] mx-auto animate-fade-in">
+          <h1 className="text-5xl md:text-6xl font-semibold tracking-tight text-apple-gray-600 mb-6">
+            Simple, transparent <br /> pricing.
+          </h1>
+          <p className="text-xl text-apple-gray-400 mb-16">
+            Get started for free. Pay only when you're ready to go live.
+          </p>
+          
+          <div className="max-w-md mx-auto apple-card p-12 text-center border-apple-blue shadow-xl">
+             <h2 className="text-2xl font-semibold text-apple-gray-600 mb-2">Professional</h2>
+             <div className="flex items-baseline justify-center gap-1 mb-8">
+                <span className="text-5xl font-bold text-apple-gray-600">$19</span>
+                <span className="text-xl text-apple-gray-400 font-medium">/connection</span>
+             </div>
+             
+             <ul className="text-left space-y-4 mb-10">
+                <li className="flex items-center gap-3 text-apple-gray-500">
+                   <span className="text-apple-green text-lg">✓</span>
+                   Unlimited AI responses
+                </li>
+                <li className="flex items-center gap-3 text-apple-gray-500">
+                   <span className="text-apple-green text-lg">✓</span>
+                   Real-time WhatsApp handoff
+                </li>
+                <li className="flex items-center gap-3 text-apple-gray-500">
+                   <span className="text-apple-green text-lg">✓</span>
+                   Full Dubai project database
+                </li>
+                <li className="flex items-center gap-3 text-apple-gray-500">
+                   <span className="text-apple-green text-lg">✓</span>
+                   Lead qualification & data
+                </li>
+             </ul>
+             
+             <Link href="/dashboard" className="apple-button-primary w-full text-lg">
+                Get Started Now
+             </Link>
+             <p className="mt-4 text-[12px] text-apple-gray-400">
+                No credit card required to set up.
+             </p>
+          </div>
         </div>
-      </Section>
+      </section>
+      
+      <section className="py-24 bg-apple-gray-50 px-6">
+         <div className="max-w-[800px] mx-auto text-center">
+            <h2 className="text-3xl font-semibold text-apple-gray-600 mb-8">Frequently Asked Questions</h2>
+            <div className="space-y-8 text-left">
+               <div>
+                  <h3 className="text-lg font-semibold text-apple-gray-600 mb-2">How does the $19 fee work?</h3>
+                  <p className="text-apple-gray-400">It's a simple, flat fee per Instagram connection. You only pay when you decide to activate the bot on your account. No hidden monthly subscriptions.</p>
+               </div>
+               <div>
+                  <h3 className="text-lg font-semibold text-apple-gray-600 mb-2">Can I test it before paying?</h3>
+                  <p className="text-apple-gray-400">Yes! You can set up your entire brand, listings, and projects, and test the bot in our preview environment without paying a cent.</p>
+               </div>
+            </div>
+         </div>
+      </section>
     </main>
   );
 }

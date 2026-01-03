@@ -60,7 +60,12 @@ type FeedbackState = {
 
 const formatDateLabel = (value: number | null | undefined) => {
   if (!value) return "TBA";
-  return new Date(value).toLocaleString();
+  return new Date(value).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit'
+  });
 };
 
 const toDateInputValue = (value: number | null | undefined) => {
@@ -225,200 +230,143 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <section className="rounded-3xl border border-white/10 bg-slate-900/70 p-6 text-sm text-slate-200">
-        <p className="text-xs uppercase tracking-[0.35em] text-emerald-400">Step 3</p>
-        <h1 className="mt-2 text-2xl font-semibold text-white">Tell the bot about your launches + roadshows.</h1>
-        <p className="mt-2 text-slate-300">
-          Just enter the name, date, and where it happens. The assistant will invite every interested buyer and send them
-          to WhatsApp. Pause any event anytime.
-        </p>
-      </section>
+    <div className="p-8 space-y-12">
+      <div className="max-w-2xl">
+        <h2 className="text-2xl font-semibold text-apple-gray-600 mb-2">Events & Roadshows</h2>
+        <p className="text-apple-gray-400">Promote your upcoming launches or investment clinics. The AI will invite interested buyers.</p>
+      </div>
 
-      <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6">
-        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-wide text-emerald-400">Event form</p>
-            <h2 className="text-lg font-semibold text-white">{form.id ? "Update event" : "Add event"}</h2>
-          </div>
-          {feedback && (
-            <span
-              className={`text-xs font-medium ${
-                feedback.type === "success" ? "text-emerald-400" : "text-red-400"
-              }`}
-            >
-              {feedback.message}
-            </span>
-          )}
+      <div className="bg-apple-gray-50 rounded-apple-md border border-apple-gray-100 p-8">
+        <div className="flex justify-between items-center mb-8">
+           <h3 className="text-sm font-bold uppercase tracking-widest text-apple-gray-400">
+             {form.id ? 'Edit Event' : 'New Event'}
+           </h3>
+           {feedback && (
+             <span className={`text-sm font-medium ${feedback.type === 'success' ? 'text-apple-green' : 'text-apple-red'}`}>
+                {feedback.message}
+             </span>
+           )}
         </div>
-        <div className="mt-4 grid gap-3 md:grid-cols-2">
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Title</label>
-            <input
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.title}
-              onChange={(event) => setForm((prev) => ({ ...prev, title: event.target.value }))}
-              placeholder="Palm Jumeirah launch"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Type</label>
-            <select
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.type}
-              onChange={(event) => setForm((prev) => ({ ...prev, type: event.target.value }))}
-            >
-              <option value="launch">Launch</option>
-              <option value="webinar">Webinar</option>
-              <option value="open-house">Open house</option>
-              <option value="investment-clinic">Investment clinic</option>
-            </select>
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Location / link</label>
-            <input
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.location}
-              onChange={(event) => setForm((prev) => ({ ...prev, location: event.target.value }))}
-              placeholder="Venue or Zoom link"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Start time</label>
-            <input
-              type="datetime-local"
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.startDateTime}
-              onChange={(event) => setForm((prev) => ({ ...prev, startDateTime: event.target.value }))}
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Related project (optional)</label>
-            <input
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.related_project}
-              onChange={(event) => setForm((prev) => ({ ...prev, related_project: event.target.value }))}
-              placeholder="Project name"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">CTA text</label>
-            <input
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.cta_text}
-              onChange={(event) => setForm((prev) => ({ ...prev, cta_text: event.target.value }))}
-              placeholder="RSVP on WhatsApp +971..."
-            />
-          </div>
-          <div className="md:col-span-2">
-            <label className="mb-1 block text-xs uppercase tracking-wide text-slate-400">Short description</label>
-            <textarea
-              rows={4}
-              className="w-full rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-white focus:border-emerald-500 focus:outline-none"
-              value={form.short_description}
-              onChange={(event) => setForm((prev) => ({ ...prev, short_description: event.target.value }))}
-              placeholder="What is the hook for this event?"
-            />
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="event-active"
-              checked={form.active}
-              onChange={(event) => setForm((prev) => ({ ...prev, active: event.target.checked }))}
-              className="h-4 w-4"
-            />
-            <label htmlFor="event-active" className="text-xs uppercase tracking-wide text-slate-400">
-              Active
-            </label>
-          </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <div className="space-y-2">
+              <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Title</label>
+              <input
+                className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-4 py-3 focus:ring-2 focus:ring-apple-blue/10 focus:border-apple-blue outline-none transition-all"
+                value={form.title}
+                onChange={(e) => setForm(f => ({ ...f, title: e.target.value }))}
+                placeholder="e.g. Palm Jumeirah Launch Event"
+              />
+           </div>
+           <div className="space-y-2">
+              <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Type</label>
+              <select 
+                className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-4 py-3 text-sm outline-none"
+                value={form.type}
+                onChange={(e) => setForm(f => ({ ...f, type: e.target.value }))}
+              >
+                <option value="launch">Launch</option>
+                <option value="webinar">Webinar</option>
+                <option value="open-house">Open house</option>
+                <option value="investment-clinic">Investment clinic</option>
+              </select>
+           </div>
+
+           <div className="space-y-2">
+              <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Location / Link</label>
+              <input
+                className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-4 py-3 outline-none"
+                value={form.location}
+                onChange={(e) => setForm(f => ({ ...f, location: e.target.value }))}
+                placeholder="Venue or Zoom link"
+              />
+           </div>
+           <div className="space-y-2">
+              <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Start Time</label>
+              <input
+                type="datetime-local"
+                className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-4 py-3 outline-none"
+                value={form.startDateTime}
+                onChange={(e) => setForm(f => ({ ...f, startDateTime: e.target.value }))}
+              />
+           </div>
+
+           <div className="md:col-span-2 space-y-2">
+              <label className="text-[12px] font-bold uppercase tracking-widest text-apple-gray-400">Short Description</label>
+              <textarea
+                rows={3}
+                className="w-full bg-white border border-apple-gray-100 rounded-apple-sm px-4 py-3 outline-none"
+                value={form.short_description}
+                onChange={(e) => setForm(f => ({ ...f, short_description: e.target.value }))}
+                placeholder="Briefly describe why buyers should attend..."
+              />
+           </div>
         </div>
-        <div className="mt-4 flex flex-wrap items-center justify-end gap-3">
-          {form.id && (
-            <button
-              onClick={() => setForm(createEmptyForm())}
-              className="rounded-full border border-white/10 px-4 py-2 text-xs text-slate-300"
-              disabled={saving}
-            >
-              Cancel edit
-            </button>
-          )}
-          <button
-            onClick={handleSubmit}
-            disabled={saving}
-            className="rounded-full bg-emerald-600 px-5 py-2 text-sm font-semibold text-white disabled:opacity-50"
-          >
-            {saving ? "Saving..." : form.id ? "Update event" : "Publish event"}
-          </button>
+
+        <div className="mt-8 flex items-center justify-end gap-4">
+           {form.id && (
+             <button 
+               onClick={() => setForm(createEmptyForm())}
+               className="text-apple-gray-400 hover:text-apple-gray-600 font-medium"
+             >
+               Cancel
+             </button>
+           )}
+           <button
+             onClick={handleSubmit}
+             disabled={saving}
+             className="apple-button-primary px-8"
+           >
+             {saving ? 'Saving...' : form.id ? 'Update Event' : 'Add Event'}
+           </button>
         </div>
       </div>
 
-      <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6">
-        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-wide text-emerald-400">Invites</p>
-            <h2 className="text-lg font-semibold text-white">Upcoming events</h2>
-          </div>
-          {loading && <span className="text-xs text-slate-500">Loading...</span>}
-        </div>
-        {events.length === 0 && !loading ? (
-          <p className="mt-4 rounded-2xl border border-dashed border-white/10 p-4 text-sm text-slate-400">
-            No events listed. Add your next launch above so the AI can start sending RSVPs.
-          </p>
-        ) : (
-          <div className="mt-4 space-y-3">
-            {events.map((eventRecord) => (
-              <div
-                key={eventRecord.id}
-                className="rounded-2xl border border-white/10 bg-slate-900/40 p-4 text-sm"
-              >
-                <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <p className="text-base font-semibold text-white">{eventRecord.title}</p>
-                    <p className="text-xs text-slate-400">
-                      {formatDateLabel(eventRecord.start_datetime)} · {eventRecord.location || "TBA"}
-                    </p>
+      <div className="space-y-4">
+         <h3 className="text-sm font-bold uppercase tracking-widest text-apple-gray-400">Upcoming Events</h3>
+         
+         {loading ? (
+            <div className="text-center py-20 bg-white rounded-apple-lg border border-apple-gray-50 text-apple-gray-300">
+               Loading events...
+            </div>
+         ) : events.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-apple-lg border border-dashed border-apple-gray-200 text-apple-gray-400 italic">
+               No events scheduled yet.
+            </div>
+         ) : (
+            <div className="grid grid-cols-1 gap-4">
+               {events.map(event => (
+                  <div key={event.id} className="bg-white p-6 rounded-apple-lg border border-apple-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                     <div className="space-y-1">
+                        <div className="flex items-center gap-3">
+                           <h4 className="text-lg font-semibold text-apple-gray-600">{event.title}</h4>
+                           <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                              event.active ? 'bg-apple-blue/10 text-apple-blue' : 'bg-apple-gray-100 text-apple-gray-400'
+                           }`}>
+                              {event.type}
+                           </span>
+                        </div>
+                        <p className="text-sm text-apple-gray-400">{formatDateLabel(event.start_datetime)} • {event.location}</p>
+                     </div>
+                     
+                     <div className="flex items-center gap-4">
+                        <button 
+                          onClick={() => handleEdit(event)}
+                          className="p-2 hover:bg-apple-gray-50 rounded-full transition-colors"
+                        >
+                           ✏️
+                        </button>
+                        <button 
+                          onClick={() => handleDelete(event)}
+                          className="p-2 hover:bg-apple-red/5 text-apple-red rounded-full transition-colors"
+                        >
+                           🗑️
+                        </button>
+                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide">
-                    <span className="rounded-full bg-slate-800 px-3 py-1">{eventRecord.type}</span>
-                    <span
-                      className={`rounded-full px-3 py-1 ${
-                        eventRecord.active ? "bg-emerald-500/10 text-emerald-300" : "bg-slate-800 text-slate-400"
-                      }`}
-                    >
-                      {eventRecord.active ? "Active" : "Paused"}
-                    </span>
-                  </div>
-                </div>
-                {eventRecord.related_project ? (
-                  <p className="mt-1 text-xs text-slate-400">Project: {eventRecord.related_project}</p>
-                ) : null}
-                <p className="mt-2 text-xs text-slate-300">{eventRecord.short_description}</p>
-                <p className="mt-2 text-xs text-emerald-400">{eventRecord.cta_text}</p>
-                <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                  <button
-                    className="rounded-lg border border-slate-700 px-3 py-1 text-slate-200"
-                    onClick={() => handleEdit(eventRecord)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="rounded-lg border border-slate-700 px-3 py-1 text-slate-200"
-                    onClick={() => handleToggleActive(eventRecord)}
-                  >
-                    {eventRecord.active ? "Pause" : "Activate"}
-                  </button>
-                  <button
-                    className="rounded-lg border border-red-500/40 px-3 py-1 text-red-300"
-                    onClick={() => handleDelete(eventRecord)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+               ))}
+            </div>
+         )}
       </div>
     </div>
   );
